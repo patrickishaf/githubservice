@@ -2,20 +2,21 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/patrickishaf/githubservice/pkg/config"
+	"github.com/patrickishaf/githubservice/pkg/db"
 	"github.com/patrickishaf/githubservice/pkg/handlers"
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
 )
 
 func main() {
-	_, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-	if err != nil {
-		panic("failed to connect to db")
-	}
+	config.LoadEnv()
+	db.InitializeDb()
 
 	router := gin.Default()
 
-	router.GET("/repo", handlers.GetRepoByName)
+	router.GET("/repo/:org_name/:repo_name", handlers.GetRepoByName)
+	router.GET("/commits/:org_name/:repo_name", handlers.GetCommitsByRepoName)
+	router.GET("/repo/lang", handlers.SearchReposByLanguage)
+	router.GET("/repo/stars", handlers.GetTopReposByStarCount)
 
 	router.Run("localhost:8080")
 }
