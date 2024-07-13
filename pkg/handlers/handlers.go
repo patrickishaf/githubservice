@@ -47,6 +47,26 @@ func GetCommitsByRepoName(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, responseData)
 }
 
-func SearchReposByLanguage(c *gin.Context) {}
+func SearchReposByLanguage(c *gin.Context) {
+	language := c.Param("lang")
+	responseData, err := services.GetRepoByLanguage(language)
 
-func GetTopReposByStarCount(c *gin.Context) {}
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "failed to get repository information")
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, responseData)
+}
+
+func GetTopReposByStarCount(c *gin.Context) {
+	starCount := c.Param("star_count")
+	responseData, err := services.GetRepoByLanguage(starCount)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, "failed to get repository information")
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, responseData)
+}

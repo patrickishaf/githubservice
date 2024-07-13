@@ -13,3 +13,7 @@ type Repository struct {
 	UpdatedAt       string `json:"updated_at"`
 	RepoId          int32  `gorm:"primarykey" json:"id"`
 }
+
+type RepositoryList struct {
+	Items []Repository `json:"items"`
+}

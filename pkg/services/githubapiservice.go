@@ -46,6 +46,23 @@ func GetCommitsInRepo(orgName string, repoName string) ([]models.CommitResponse,
 	return commits, nil
 }
 
-func GetRepoByLanguage(language string) {}
+func GetRepoByLanguage(language string) ([]models.Repository, error) {
+	url := fmt.Sprintf("/search/repositories?q=language:%s", language)
+	data, err := get(url)
+
+	if err != nil {
+		log.Println("failed to fetch commits for repo")
+		return nil, err
+	}
+
+	var commits models.RepositoryList
+
+	if err := json.Unmarshal(data, &commits); err != nil {
+		log.Println("failed to unmarshal json")
+		return nil, err
+	}
+
+	return commits.Items, nil
+}
 
 func GetRepositoriesByStarCount(limit int32) {}
