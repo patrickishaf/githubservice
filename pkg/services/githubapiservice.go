@@ -27,16 +27,16 @@ func GetRepoByName(orgName string, repoName string) (models.Repository, error) {
 	return repo, nil
 }
 
-func GetCommitsInRepo(orgName string, repoName string) ([]models.Commit, error) {
+func GetCommitsInRepo(orgName string, repoName string) ([]models.CommitResponse, error) {
 	url := fmt.Sprintf("/repos/%s/%s/commits", orgName, repoName)
 	data, err := get(url)
 
 	if err != nil {
 		log.Println("failed to fetch commits for repo")
-		return []models.Commit{}, err
+		return []models.CommitResponse{}, err
 	}
 
-	var commits = []models.Commit{}
+	var commits = []models.CommitResponse{}
 
 	if err := json.Unmarshal(data, &commits); err != nil {
 		log.Println("failed to unmarshal json")

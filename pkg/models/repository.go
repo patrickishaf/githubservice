@@ -1,10 +1,8 @@
 package models
 
-import "gorm.io/gorm"
-
 type Repository struct {
-	gorm.Model
 	Name            string `json:"name"`
+	FullName        string `json:"full_name"`
 	Description     string `json:"description"`
 	URL             string `json:"html_url"`
 	Language        string `json:"language"`
@@ -13,4 +11,5 @@ type Repository struct {
 	WatchersCount   int64  `json:"watchers_count"`
 	CreatedAt       string `json:"created_at"`
 	UpdatedAt       string `json:"updated_at"`
+	RepoId          int32  `gorm:"primarykey" json:"id"`
 }
