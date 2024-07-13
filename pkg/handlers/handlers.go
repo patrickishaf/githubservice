@@ -63,7 +63,7 @@ func SearchReposByLanguage(c *gin.Context) {
 
 func GetTopReposByStarCount(c *gin.Context) {
 	starCount := c.Query("count")
-	limit := c.DefaultQuery("limit", "0")
+	limit := c.Query("limit")
 
 	log.Println("the value of limit is ", limit)
 

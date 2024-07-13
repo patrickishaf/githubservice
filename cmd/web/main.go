@@ -16,5 +16,8 @@ func main() {
 	router.GET("/repo/lang/:lang", handlers.SearchReposByLanguage)
 	router.GET("/repo/stars", handlers.GetTopReposByStarCount)
 
-	router.Run("localhost:8080")
+	err := router.Run("localhost:8080")
+	if err != nil {
+		panic(err)
+	}
 }
