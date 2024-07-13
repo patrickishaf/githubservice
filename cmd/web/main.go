@@ -2,13 +2,11 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/patrickishaf/githubservice/pkg/config"
 	"github.com/patrickishaf/githubservice/pkg/db"
 	"github.com/patrickishaf/githubservice/pkg/handlers"
 )
 
 func main() {
-	config.LoadEnv()
 	db.InitializeDb()
 
 	router := gin.Default()
