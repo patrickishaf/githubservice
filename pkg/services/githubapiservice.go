@@ -55,14 +55,32 @@ func GetRepoByLanguage(language string) ([]models.Repository, error) {
 		return nil, err
 	}
 
-	var commits models.RepositoryList
+	var repos models.RepositoryList
 
-	if err := json.Unmarshal(data, &commits); err != nil {
+	if err := json.Unmarshal(data, &repos); err != nil {
 		log.Println("failed to unmarshal json")
 		return nil, err
 	}
 
-	return commits.Items, nil
+	return repos.Items, nil
 }
 
-func GetRepositoriesByStarCount(limit int32) {}
+func GetRepositoriesByStarCount(starCount, limit int) ([]models.Repository, error) {
+	url := fmt.Sprintf("/search/repositories?q=stars:%d&sort=stars&per_page=%d", starCount, limit)
+	log.Println("the url is")
+	data, err := get(url)
+
+	if err != nil {
+		log.Println("failed to fetch commits for repo")
+		return nil, err
+	}
+
+	var repos models.RepositoryList
+
+	if err := json.Unmarshal(data, &repos); err != nil {
+		log.Println("failed to unmarshal json")
+		return nil, err
+	}
+
+	return repos.Items, nil
+}

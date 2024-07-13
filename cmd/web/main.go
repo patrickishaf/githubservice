@@ -16,7 +16,7 @@ func main() {
 	router.GET("/repo/:org_name/:repo_name", handlers.GetRepoByName)
 	router.GET("/commits/:org_name/:repo_name", handlers.GetCommitsByRepoName)
 	router.GET("/repo/lang/:lang", handlers.SearchReposByLanguage)
-	router.GET("/repo/stars/:star_count", handlers.GetTopReposByStarCount)
+	router.GET("/repo/stars", handlers.GetTopReposByStarCount)
 
 	router.Run("localhost:8080")
 }

@@ -8,6 +8,7 @@ type Repository struct {
 	Language        string `json:"language"`
 	ForksCount      int32  `json:"forks_count"`
 	OpenIssuesCount int64  `json:"open_issues_count"`
+	StarsCount      int64  `json:"stargazers_count"`
 	WatchersCount   int64  `json:"watchers_count"`
 	CreatedAt       string `json:"created_at"`
 	UpdatedAt       string `json:"updated_at"`

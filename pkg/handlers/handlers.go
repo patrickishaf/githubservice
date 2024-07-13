@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/patrickishaf/githubservice/pkg/db"
@@ -60,8 +62,24 @@ func SearchReposByLanguage(c *gin.Context) {
 }
 
 func GetTopReposByStarCount(c *gin.Context) {
-	starCount := c.Param("star_count")
-	responseData, err := services.GetRepoByLanguage(starCount)
+	starCount := c.Query("count")
+	limit := c.DefaultQuery("limit", "0")
+
+	log.Println("the value of limit is ", limit)
+
+	intStarCount, err := strconv.Atoi(starCount)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "you entered an invalid star count")
+		return
+	}
+
+	intLimit, err := strconv.Atoi(limit)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "you entered an invalid limit")
+		return
+	}
+
+	responseData, err := services.GetRepositoriesByStarCount(intStarCount, intLimit)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, "failed to get repository information")
