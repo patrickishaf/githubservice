@@ -11,10 +11,6 @@ type RepositoryMonitor struct {
 	ticker *time.Ticker
 }
 
-func NewRepositoryMonitor() *RepositoryMonitor {
-	return &RepositoryMonitor{}
-}
-
 func (r *RepositoryMonitor) RefreshPeriodically(orgName, repoName string) {
 	r.refreshRepository(orgName, repoName)
 }
