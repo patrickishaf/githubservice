@@ -1,4 +1,4 @@
-package models
+package db
 
 import (
 	"os"
@@ -13,11 +13,11 @@ func TestMain(m *testing.M) {
 
 func TestConvertToCommit(t *testing.T) {
 	inaccurateConversionError := "failed to commit to CommitResponse successfully"
-	response := CommitResponse{
+	response := db.CommitResponse{
 		Hash: "commitresponsehash",
-		Commit: CommitData{
+		Commit: db.CommitData{
 			Message: "commitresponsemessage",
-			Author: Author{
+			Author: db.Author{
 				Name:  "commitresponseauthorname",
 				Email: "commitresponseauthoremail",
 				Date:  "commitresponseauthordate",
@@ -26,7 +26,7 @@ func TestConvertToCommit(t *testing.T) {
 	}
 	commit := response.ConvertToCommit()
 
-	if (reflect.TypeOf(*commit)) != reflect.TypeOf(Commit{}) {
+	if (reflect.TypeOf(*commit)) != reflect.TypeOf(db.Commit{}) {
 		t.Fatal("failed to convert CommitResponse to Commit")
 	}
 
@@ -41,7 +41,7 @@ func TestConvertToCommit(t *testing.T) {
 
 func TestConvertToCommitResponse(t *testing.T) {
 	inaccurateConversionError := "failed to commit to CommitResponse successfully"
-	commit := Commit{
+	commit := db.Commit{
 		Hash:        "hash",
 		Message:     "message",
 		AuthorName:  "authorname",
@@ -50,7 +50,7 @@ func TestConvertToCommitResponse(t *testing.T) {
 	}
 	response := commit.ConvertToCommitResponse()
 
-	if reflect.TypeOf(*response) != reflect.TypeOf(CommitResponse{}) {
+	if reflect.TypeOf(*response) != reflect.TypeOf(db.CommitResponse{}) {
 		t.Fatal("failed to convert Commit to CommitResponse")
 	}
 

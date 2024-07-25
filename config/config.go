@@ -15,6 +15,6 @@ func LoadEnv() {
 	}
 }
 
-func GetEnvVariable(key string) string {
-	return os.Getenv(key)
+func GetEnvVariable(key string) (string, bool) {
+	return os.LookupEnv(key)
 }

@@ -1,7 +1,6 @@
 package db
 
 import (
-	"github.com/patrickishaf/githubservice/pkg/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 	"log"
@@ -16,9 +15,13 @@ func InitializeDb() {
 	}
 
 	db = database
-	dbError := db.AutoMigrate(&models.Repository{}, &models.Commit{})
+	dbError := db.AutoMigrate(&Repository{}, &Commit{})
 
 	if dbError != nil {
 		log.Println("failed to migrate database", dbError)
 	}
+}
+
+func GetDB() *gorm.DB {
+	return db
 }

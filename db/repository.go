@@ -1,4 +1,4 @@
-package models
+package db
 
 type Repository struct {
 	Name            string `json:"name"`

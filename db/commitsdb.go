@@ -1,20 +1,19 @@
 package db
 
 import (
-	"github.com/patrickishaf/githubservice/pkg/models"
 	"log"
 )
 
-func insertOrUpdateCommit(currentCommit *models.Commit) {
-	matchingCommit := models.Commit{}
-	result := db.Where("hash = ?", currentCommit.Hash).First(&matchingCommit)
+func insertOrUpdateCommit(currentCommit *Commit) {
+	matchingCommit := Commit{}
+	result := GetDB().Where("hash = ?", currentCommit.Hash).First(&matchingCommit)
 
 	if result.Error != nil {
 		log.Println("no commit with this commit hash. writing this commit to the db")
-		db.Create(currentCommit)
+		GetDB().Create(currentCommit)
 	} else {
 		// Update this entry with the new commit details
-		db.Save(&models.Commit{
+		GetDB().Save(&Commit{
 			Hash:        currentCommit.Hash,
 			Message:     currentCommit.Message,
 			AuthorName:  currentCommit.AuthorName,
@@ -24,7 +23,7 @@ func insertOrUpdateCommit(currentCommit *models.Commit) {
 	}
 }
 
-func InsertCommits(commits *[]models.Commit) {
+func InsertCommits(commits *[]Commit) {
 	for _, currentCommit := range *commits {
 		insertOrUpdateCommit(&currentCommit)
 	}

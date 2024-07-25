@@ -2,20 +2,18 @@ package db
 
 import (
 	"log"
-
-	"github.com/patrickishaf/githubservice/pkg/models"
 )
 
-func InsertOrUpdateRepo(repo *models.Repository) {
-	matchingRepo := models.Repository{}
-	result := db.Where("repo_id = ?", repo.RepoId).First(&matchingRepo)
+func InsertOrUpdateRepo(repo *Repository) {
+	matchingRepo := Repository{}
+	result := GetDB().Where("repo_id = ?", repo.RepoId).First(&matchingRepo)
 
 	if result.Error != nil {
 		log.Println("no repository with matching RepoId yet. Inserting new repository...")
-		db.Create(repo)
+		GetDB().Create(repo)
 	} else {
 		log.Println("there is already a repo with the same RepoId. Updating record")
-		db.Save(&models.Repository{
+		GetDB().Save(&Repository{
 			Name:            repo.Name,
 			FullName:        repo.FullName,
 			Description:     repo.Description,
