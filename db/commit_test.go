@@ -13,11 +13,11 @@ func TestMain(m *testing.M) {
 
 func TestConvertToCommit(t *testing.T) {
 	inaccurateConversionError := "failed to commit to CommitResponse successfully"
-	response := db.CommitResponse{
+	response := CommitResponse{
 		Hash: "commitresponsehash",
-		Commit: db.CommitData{
+		Commit: CommitData{
 			Message: "commitresponsemessage",
-			Author: db.Author{
+			Author: Author{
 				Name:  "commitresponseauthorname",
 				Email: "commitresponseauthoremail",
 				Date:  "commitresponseauthordate",
@@ -26,7 +26,7 @@ func TestConvertToCommit(t *testing.T) {
 	}
 	commit := response.ConvertToCommit()
 
-	if (reflect.TypeOf(*commit)) != reflect.TypeOf(db.Commit{}) {
+	if (reflect.TypeOf(*commit)) != reflect.TypeOf(Commit{}) {
 		t.Fatal("failed to convert CommitResponse to Commit")
 	}
 
@@ -41,7 +41,7 @@ func TestConvertToCommit(t *testing.T) {
 
 func TestConvertToCommitResponse(t *testing.T) {
 	inaccurateConversionError := "failed to commit to CommitResponse successfully"
-	commit := db.Commit{
+	commit := Commit{
 		Hash:        "hash",
 		Message:     "message",
 		AuthorName:  "authorname",
@@ -50,7 +50,7 @@ func TestConvertToCommitResponse(t *testing.T) {
 	}
 	response := commit.ConvertToCommitResponse()
 
-	if reflect.TypeOf(*response) != reflect.TypeOf(db.CommitResponse{}) {
+	if reflect.TypeOf(*response) != reflect.TypeOf(CommitResponse{}) {
 		t.Fatal("failed to convert Commit to CommitResponse")
 	}
 
